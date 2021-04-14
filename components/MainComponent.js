@@ -1,30 +1,57 @@
-// import { SafeAreaProvider } from 'react-native-safe-area-context';
-
+// import React, { Component } from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
 // import { StatusBar } from 'expo-status-bar';
-// import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-// import Main from './components/MainComponent';
+// import { createStackNavigator } from '@react-navigation/stack';
+// import Home from './HomeComponent';
+// import { View } from 'react-native';
 
-// export default function App() {
+// // const Stack = createStackNavigator();
+
+// // class Main extends Component {
+// //   render() {
+// //     return (
+// //       <View>
+// //         <NavigationContainer>
+// //           <Stack.Navigator>
+// //             <Stack.Screen name='Home' component={Home} />
+// //           </Stack.Navigator>
+// //         </NavigationContainer>
+// //       </View>
+// //     );
+// //   }
+// // }
+
+// // export default Main;
+
+// const Stack = createStackNavigator();
+
+// export default function Main() {
 //   return (
-//     <SafeAreaProvider>
-//       <View style={styles.container}>
-//         <StatusBar style='auto' />
+//     <View>
+//       <StatusBar style='dark' />
+//       <NavigationContainer>
+//         <Stack.Navigator initialRouteName='Home'>
+//           {/* SplashScreen which will come once */}
 
-//         <Main />
-//       </View>
-//     </SafeAreaProvider>
+//           <Stack.Screen
+//             name='Home'
+//             component={Home}
+//             options={{
+//               title: 'Home', //Set Header Title
+//               headerStyle: {
+//                 backgroundColor: '#0067f4', //Set Header color
+//               },
+//               headerTintColor: '#fff', //Set Header text color
+//               headerTitleStyle: {
+//                 fontWeight: 'bold', //Set Header text style
+//               },
+//             }}
+//           />
+//         </Stack.Navigator>
+//       </NavigationContainer>
+//     </View>
 //   );
 // }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
 
 import * as React from 'react';
 
@@ -45,11 +72,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View } from 'react-native';
-import Home from './components/HomeComponent';
-import FirstForm from './components/FirstForm';
-import SecondForm from './components/SecondForm';
-import Failed from './components/Failed';
-import Success from './components/Success';
+import Home from './HomeComponent';
 import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
@@ -138,10 +161,10 @@ LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function Main() {
   return (
     <View style={styles.mainBody}>
-      <StatusBar style='white' />
+      <StatusBar style='dark' />
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Home'>
           {/* SplashScreen which will come once */}
@@ -149,80 +172,6 @@ export default function App() {
             name='Home'
             component={Home}
             // Hiding header for Splash Screen
-            options={{ headerShown: false }}
-          />
-
-          <Stack.Screen
-            name='FirstForm'
-            component={FirstForm}
-            // Hiding header for Splash Screen
-
-            options={{
-              title: 'Enter Details', //Set Header Title
-              headerStyle: {
-                backgroundColor: '#0069FF', //Set Header color
-              },
-              headerTintColor: '#fff', //Set Header text color
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                justifyContent: 'center', //Set Header text style
-              },
-            }}
-          />
-
-          <Stack.Screen
-            name='SecondForm'
-            component={SecondForm}
-            // Hiding header for Splash Screen
-
-            options={{
-              title: 'Enter Details', //Set Header Title
-              headerStyle: {
-                backgroundColor: '#0069FF', //Set Header color
-              },
-              headerTintColor: '#fff', //Set Header text color
-              headerTitleStyle: {
-                fontWeight: 'bold', //Set Header text style
-                justifyContent: 'center',
-              },
-            }}
-          />
-
-          <Stack.Screen
-            name='Success'
-            component={Success}
-            // Hiding header for Splash Screen
-
-            // options={{
-            //   title: null, //Set Header Title
-            //   headerStyle: {
-            //     backgroundColor: '#0069FF', //Set Header color
-            //   },
-            //   headerTintColor: '#fff', //Set Header text color
-            //   headerTitleStyle: {
-            //     fontWeight: 'bold', //Set Header text style
-            //   },
-            // }}
-
-            options={{ headerShown: false }}
-          />
-
-          <Stack.Screen
-            name='Failed'
-            component={Failed}
-            // Hiding header for Splash Screen
-
-            // options={{
-            //   title: null, //Set Header Title
-            //   headerStyle: {
-            //     backgroundColor: '#0069FF', //Set Header color
-            //   },
-            //   headerTintColor: '#fff', //Set Header text color
-            //   headerTitleStyle: {
-            //     fontWeight: 'bold', //Set Header text style
-            //   },
-            // }}
-
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
