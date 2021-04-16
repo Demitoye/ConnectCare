@@ -1,4 +1,4 @@
-import React, { Component, BackHandler } from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -12,6 +12,7 @@ import {
   ImageBackground,
   backgroundImage,
   Alert,
+  BackHandler,
 } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';

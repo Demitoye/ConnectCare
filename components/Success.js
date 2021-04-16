@@ -1,4 +1,4 @@
-import React, { Component, BackHandler } from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -12,6 +12,7 @@ import {
   ImageBackground,
   backgroundImage,
   Alert,
+  BackHandler,
 } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';
@@ -41,7 +42,7 @@ class Success extends Component {
               justifyContent: 'center',
             }}
           >
-            <ConfettiCannon count={250} origin={{ x: -100, y: 0 }} />
+            <ConfettiCannon count={250} origin={{ x: -20, y: 0 }} />
             <Image
               style={{ width: 120, height: 120 }}
               source={{

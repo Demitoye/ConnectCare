@@ -177,16 +177,32 @@ const FirstForm = (props) => {
           })
         );
         console.log(responseJson);
-        props.navigation.replace('SecondForm');
-        // If server response message same as Data Matched
-        if (responseJson.status === 'success') {
-          //   setIsRegistraionSuccess(true);
-          console.log(response);
-          console.log('Registration Successful. Please Login to proceed');
+        console.log(responseJson.error);
 
-          navigation.replace('SecondForm', { email: userEmail });
+        // If server response message same as Data Matched
+        if (!responseJson.error) {
+          console.log(responseJson);
+          console.log('Registration Successful. Please Login to proceed');
+          console.log(responseJson._id);
+          console.log(responseJson.id);
+
+          // props.navigation.navigate('SecondForm', {
+          //   email: userEmail,
+          // });
+
+          props.navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'SecondForm',
+                params: { email: userEmail },
+              },
+            ],
+          });
         } else {
           setErrortext(responseJson.msg);
+          alert('Email Already Exist');
+          console.log(responseJson.error);
         }
       })
       .catch((error) => {
@@ -219,7 +235,7 @@ const FirstForm = (props) => {
     return (val) => setSelectedTeam(val);
   };
   return (
-    <KeyboardAvoidingView style={{ margin: 10 }} behavior='padding'>
+    <KeyboardAvoidingView>
       <Animatable.View
         animation='zoomIn'
         duration={1000}

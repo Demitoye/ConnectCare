@@ -183,7 +183,7 @@ export default function App() {
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
                 fontWeight: 'bold', //Set Header text style
-                justifyContent: 'center',
+                margin: '30%',
               },
             }}
           />

@@ -122,28 +122,14 @@ const SecondForm = (props) => {
       return;
     }
 
-    var dataToSend = {
-      certificate: certificate,
-      IELTS: IELTS,
-      Nurse: qualified,
-      NMC: NMC,
-      CBT: CBT,
-      discipline: Discipline,
-      experience: Experience,
-      workingNurse: Working,
-      department: Department,
-      relation: Relation,
-      notice: Notice,
-    };
-    var formBody = [];
-    for (var key in dataToSend) {
-      var encodedKey = encodeURIComponent(key);
-      var encodedValue = encodeURIComponent(dataToSend[key]);
-      formBody.push(encodedKey + '=' + encodedValue);
-    }
-    formBody = formBody.join('&');
+    const email = props.route.params.email;
 
-    fetch('https://kairosng.com/api/care/60755e6ecbd1ca02e55536b8', {
+    const url = 'https://kairosng.com/api/care/' + email;
+    const UserMail =
+      'https://kairosng.com/api/care/emailUser/Samtoye789@gmail.com';
+    const AdminMail = 'https://kairosng.com/api/care/email/' + email;
+
+    fetch(url, {
       method: 'PUT',
       //   body: formBody,
       body: JSON.stringify({
@@ -167,50 +153,86 @@ const SecondForm = (props) => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log(
+          JSON.stringify({
+            certificate: certificate,
+            IELTS: IELTS,
+            Nurse: qualified,
+            NMC: NMC,
+            CBT: CBT,
+            discipline: Discipline,
+            experience: Experience,
+            workingNurse: Working,
+            department: Department,
+            relation: Relation,
+            notice: Notice,
+          })
+        );
+        console.log(url);
+        console.log({ email });
         console.log(responseJson);
-        // If server response message same as Data Matched
 
-        props.navigation.reset({
-          index: 0,
-          routes: [
-            {
-              name: 'Success',
+        if (!responseJson.error) {
+          console.log(responseJson);
+          console.log('Registration Successful.');
+
+          fetch(UserMail, {
+            method: 'GET',
+
+            headers: {
+              //Header Defination
+              'content-type': 'application/json',
             },
-          ],
-        });
+          })
+            .then((response) => response.json())
+            .then((responseJson) => {
+              if (!responseJson.error) {
+                console.log('Mail Sent');
+              }
+            })
 
-        if (responseJson.status === 'success') {
-          //   setIsRegistraionSuccess(true);
-          console.log(response);
-          console.log('Registration Successful. Please Login to proceed');
+            .catch((error) => {
+              console.error(error);
+            });
+
+          fetch(AdminMail, {
+            method: 'GET',
+
+            headers: {
+              //Header Defination
+              'content-type': 'application/json',
+            },
+          })
+            .then((response) => response.json())
+            .then((responseJson) => {
+              if (!responseJson.error) {
+                console.log('Mail Sent');
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+
+          props.navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'Success',
+              },
+            ],
+          });
         } else {
           setErrortext(responseJson.msg);
+          alert('Try Again');
+          console.log(responseJson.error);
         }
       })
       .catch((error) => {
         console.error(error);
+        alert('Check internet connection and try again');
       });
   };
-  //   if (isRegistraionSuccess) {
-  //     return (
-  //       <View
-  //         style={{
-  //           flex: 1,
-  //           backgroundColor: '#307ecc',
-  //           justifyContent: 'center',
-  //         }}
-  //       >
-  //         <Text style={styles.successTextStyle}>Registration Successful</Text>
-  //         <TouchableOpacity
-  //           style={styles.buttonStyle}
-  //           activeOpacity={0.5}
-  //           onPress={() => props.navigation.navigate('LoginScreen')}
-  //         >
-  //           <Text style={styles.buttonTextStyle}>Login Now</Text>
-  //         </TouchableOpacity>
-  //       </View>
-  //     );
-  //   }
+
   return (
     <Animatable.View
       animation='zoomIn'
@@ -218,13 +240,15 @@ const SecondForm = (props) => {
       delay={400}
       useNativeDriver={true}
     >
-      <KeyboardAvoidingView behavior='padding'>
+      {/* <KeyboardAvoidingView behavior='padding'> */}
+      <KeyboardAvoidingView>
         <StatusBar style='light' />
         <ScrollView>
           <View style={styles.formRow}>
             <Text
               style={{
-                margin: 2,
+                // margin: 2,
+                margin: '2%',
                 fontSize: 22,
                 fontWeight: '500',
                 flex: 1,
@@ -243,16 +267,27 @@ const SecondForm = (props) => {
               { label: 'Masters', value: 'Masters' },
             ]}
             defaultIndex={0}
+            zIndex={5000}
+            style={{ paddingVertical: 10 }}
             placeholder='Select'
             containerStyle={{
+              // For iphone
+              // margin: '5%',
+              // marginTop: 0,
+              // marginBottom: '6%',
+              // marginLeft: 10,
+              // width: '90%',
+              // height: '100%',
+              // paddingBottom: '10%',
+
+              // flex: 1,
+
               margin: '5%',
-              marginTop: 0,
+              margin: 0,
               marginBottom: '6%',
-              marginLeft: 10,
+              marginLeft: '5%',
               width: '90%',
               height: '100%',
-              paddingBottom: '10%',
-
               flex: 1,
             }}
             style={{ backgroundColor: 'white' }}
@@ -285,7 +320,7 @@ const SecondForm = (props) => {
               margin: '5%',
               margin: 0,
               marginBottom: '6%',
-              marginLeft: 10,
+              marginLeft: '5%',
               width: '90%',
               height: '100%',
               flex: 1,
@@ -318,12 +353,12 @@ const SecondForm = (props) => {
               margin: '5%',
               margin: 0,
               marginBottom: '6%',
-              marginLeft: 10,
+              marginLeft: '5%',
               width: '90%',
               height: '100%',
               flex: 1,
             }}
-            onChangeItem={(qualified) => updateQualified(qualified)}
+            onChangeItem={(qualified) => updateQualified(qualified.value)}
           />
 
           <View style={styles.formRow}>
@@ -351,7 +386,7 @@ const SecondForm = (props) => {
               margin: '5%',
               margin: 0,
               marginBottom: '6%',
-              marginLeft: 10,
+              marginLeft: '5%',
               width: '90%',
               height: '100%',
               flex: 1,
@@ -384,7 +419,7 @@ const SecondForm = (props) => {
               margin: '5%',
               margin: 0,
               marginBottom: '6%',
-              marginLeft: 10,
+              marginLeft: '5%',
               width: '90%',
               height: '100%',
               flex: 1,
@@ -417,7 +452,7 @@ const SecondForm = (props) => {
               margin: '5%',
               margin: 0,
               marginBottom: '6%',
-              marginLeft: 10,
+              marginLeft: '5%',
               width: '90%',
               height: '100%',
               flex: 1,
@@ -451,12 +486,12 @@ const SecondForm = (props) => {
               margin: '5%',
               margin: 0,
               marginBottom: '6%',
-              marginLeft: 10,
+              marginLeft: '5%',
               width: '90%',
               height: '100%',
               flex: 1,
             }}
-            onChangeItem={(Experience) => updateExperience(Experience)}
+            onChangeItem={(Experience) => updateExperience(Experience.value)}
           />
 
           <View style={styles.formRow}>
@@ -484,12 +519,12 @@ const SecondForm = (props) => {
               margin: '5%',
               margin: 0,
               marginBottom: '6%',
-              marginLeft: 10,
+              marginLeft: '5%',
               width: '90%',
               height: '100%',
               flex: 1,
             }}
-            onChangeItem={(Working) => updateWorking(Working)}
+            onChangeItem={(Working) => updateWorking(Working.value)}
           />
           <View style={styles.formRow}>
             <Input
@@ -537,12 +572,12 @@ const SecondForm = (props) => {
               margin: '5%',
               margin: 0,
               marginBottom: '6%',
-              marginLeft: 10,
+              marginLeft: '5%',
               width: '90%',
               height: '100%',
               flex: 1,
             }}
-            onChangeItem={(Relation) => updateRelation(Relation)}
+            onChangeItem={(Relation) => updateRelation(Relation.value)}
           />
           <View style={styles.formRow}>
             <Input
